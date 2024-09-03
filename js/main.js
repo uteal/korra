@@ -1,6 +1,6 @@
 let authors = [];
 let groupingType = 0;
-let worksPerGroup = 10;
+let worksPerGroup = 8;
 let numberOfGroups = 2;
 let prevDistrValue = 0;
 let grelkaMode = false;
