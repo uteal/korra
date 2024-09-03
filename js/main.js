@@ -204,7 +204,7 @@ function sample(arr) {
 }
 
 function process(text, attempts) {
-  console.clear();
+  // console.clear();
   const result = parse(text);
   if (Array.isArray(result)) {
     authors = result;
