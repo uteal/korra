@@ -1,0 +1,247 @@
+body {
+    background-color: #e9e9e9;
+}
+
+.container {
+    position: absolute;
+    inset: 5px;
+    display: flex;
+    gap: 8px;
+}
+
+.hint {
+    font: 14px Times;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.info-panel {
+    /* display: inline-block; */
+    font: 12px Courier;
+    color: #444;
+    margin: 4px 0;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #d8d8d8;
+}
+
+.info-panel > button {
+    width: 100%;
+}
+
+.info-panel > button + button {
+    margin-top: 2px;
+}
+
+.first-column {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    margin-top: 4px;
+    font: 12px Courier;
+    background-color: #f9f9f9;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    flex-grow: 1;
+    resize: none;
+}
+
+.second-column {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.total-authors > span,
+.total-entries > span,
+.total-size > span {
+    font-weight: 700;
+}
+
+.authors {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-top: 4px;
+    padding-right: 4px;
+}
+
+.author {
+    font: 11px Courier;
+    padding: 4px 0;
+}
+
+.entries {
+    margin-top: 2px;
+}
+
+.entry {
+    color: #444;
+    display: flex;
+}
+
+.entry + .entry {
+    margin-top: 2px;
+}
+
+.third-column {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 4px;
+}
+
+.numeric-input {
+    width: 30px;
+}
+
+.numeric-input.error {
+    background-color: #fdd;
+}
+
+.button-sub,
+.button-add {
+    width: 25px;
+}
+
+.main-button {
+    height: 32px;
+    margin: 4px 0;
+}
+
+.fourth-column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+}
+
+.groups {
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-bottom: 20px;
+}
+
+.group {
+    font-size: 13px;
+}
+
+.group > .title {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    padding: 4px;
+    color: #222;
+}
+
+.group > .summary {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: #444;
+    text-align: center;
+}
+
+.group > .entry > span {
+    font-size: 12px;
+}
+
+.entries-count {
+    font-weight: bold;
+    color: rgb(8, 165, 68);
+}
+
+.authors-count {
+    font-weight: bold;
+    color: rgb(156, 102, 71);
+}
+
+.entries-size {
+    color: rgb(69, 118, 209);
+}
+
+.voters-count {
+    font-weight: bold;
+    color: rgb(156, 102, 71);
+    text-decoration: underline;
+}
+
+.entry-size {
+    display: inline-block;
+    text-align: right;
+    color: rgb(69, 118, 209);
+    min-width: 50px;
+    margin-right: 12px;
+}
+
+.entry-author {
+    display: inline-block;
+    color: rgb(156, 102, 71);
+    min-width: 200px;
+    max-width: 300px;
+    white-space: pre;
+    margin-left: 12px;
+}
+
+.voter {
+    text-decoration: underline;
+}
+
+.entry-title {
+    display: inline-block;
+    font-style: italic;
+    flex-grow: 1;
+    border-bottom: 1px dotted #ccc;
+}
+
+.entry-same-author {
+    background-color: rgba(226, 172, 92, 0.5);
+    padding: 0 4px;
+    margin-left: 2px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.entry-self-rated {
+    color: red;
+    text-decoration: underline;
+}
+
+.unselectable {
+    user-select: none;
+}
+
+input[type="checkbox"] {
+    transform: translateY(1px);
+}
+
+br + button {
+    margin-top: 6px;
+}
+
+.text-button {
+    display: inline-block;
+    font-weight: 700;
+    color: teal;
+    cursor: pointer;
+}
+
+.text-button:hover {
+    color: blue;
+}
