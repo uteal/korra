@@ -97,8 +97,8 @@ function printGroups(groups) {
       const $span = span('unselectable');
       $span.innerText = `${i + 1} группа`; 
       $title.append($span);
-      $group.append($title);
     })();
+    $group.append($title);
     $summary.innerHTML =
       `<span class="unselectable"><span class="entries-count"></span> работ от <span class="authors-count"></span> авторов (объём: <span class="entries-size"></span>)<br>` +
       `Голосуют от группы: <span class="voters-count"></span>`;
