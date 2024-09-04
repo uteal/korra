@@ -123,6 +123,34 @@ document.addEventListener('DOMContentLoaded', () => {
     ].join('\n'));
   });
 
+  const excelScreen = document.querySelector('.excel-screen');
+  const excelTextarea = document.querySelector('.excel-textarea');
+
+  document.querySelector('.btn-copy-for-excel').addEventListener('click', () => {
+    if (!printedGroups.length) {
+      return;
+    }
+    const lines = ['Размер\tНазвание\tАвтор\tГолосует'];
+    for (const group of printedGroups) {
+      lines.push('');
+      for (const { size, title, author, main } of group) {
+        lines.push(`${size}\t${title}\t${author}\t${main ? 'Да' : ''}`);
+      }
+    }
+    excelTextarea.value = lines.join('\n');
+    excelScreen.classList.remove('display-none');
+    requestAnimationFrame(() => {
+      excelTextarea.focus();
+      excelTextarea.select();
+    });
+  });
+
+  excelScreen.addEventListener('click', ({ target }) => {
+    if (target === excelScreen) {
+      excelScreen.classList.add('display-none');
+    }
+  });
+
   document.querySelector('.btn-recalculate').addEventListener('click', () => {
     process($textarea.value, 10);
   });

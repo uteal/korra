@@ -4,6 +4,7 @@ let worksPerGroup = 8;
 let numberOfGroups = 2;
 let prevDistrValue = 0;
 let grelkaMode = false;
+let printedGroups = [];
 
 function parse(value) {
   const lines = value.split('\n').map(v => v.trim()).filter(v => !!v);
@@ -172,6 +173,7 @@ function createGroups(attempts = 5) {
       bestResult = groups;
     }
   }
+  printedGroups = bestResult;
   printGroups(bestResult);
 }
 
