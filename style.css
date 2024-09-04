@@ -245,3 +245,30 @@ br + button {
 .text-button:hover {
     color: blue;
 }
+
+.excel-screen {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.excel-inner {
+    position: absolute;
+    inset: 200px;
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 14px;
+    min-width: 600px;
+    min-height: 150px;
+}
+
+.excel-textarea {
+    position: absolute;
+    inset: 0;
+    top: 32px;
+}
+
+.display-none {
+    display: none;
+}
