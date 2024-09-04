@@ -7,7 +7,7 @@ let grelkaMode = false;
 let printedGroups = [];
 
 function parse(value) {
-  const lines = value.split('\n').map(v => v.trim()).filter(v => !!v);
+  const lines = value.split(/[\t\n]+/).map(v => v.trim()).filter(v => !!v);
 
   const authors = [];
   let current_author;
