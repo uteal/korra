@@ -7,6 +7,13 @@ let grelkaMode = false;
 let printedGroups = [];
 
 function parse(value) {
+  if (/[\\<>]/.test(value)) {
+    return {
+      title: '[Ошибка] В тексте содержится один или несколько запрещённых символов: \\ < >',
+      messages: []
+    };
+  }
+
   const lines = value.split(/[\t\n]+/).map(v => v.trim()).filter(v => !!v);
 
   const authors = [];
