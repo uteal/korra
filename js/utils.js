@@ -1,12 +1,12 @@
-function div(...args) {
+function div(...classes) {
   const el = document.createElement('div');
-  args.forEach(str => el.classList.add(str));
+  el.classList.add(...classes.filter(str => !!str));
   return el;
 }
 
-function span(...args) {
+function span(...classes) {
   const el = document.createElement('span');
-  args.forEach(str => el.classList.add(str));
+  el.classList.add(...classes.filter(str => !!str));
   return el;
 }
 
@@ -26,7 +26,13 @@ function printAuthors(authors) {
       total_entries += 1;
       total_size += entry.size;
       const $entry = div('entry');
-      $entry.innerHTML = `<span class="entry-size">${entry.size}</span> <span class="entry-title">${entry.title}</size>`;
+      (() => {
+        const $span1 = span('entry-size');
+        $span1.innerText = entry.size;
+        const $span2 = span('entry-title');
+        $span2.innerText = entry.title;
+        $entry.append($span1, $span2);
+      })();
       $entries.append($entry);
     }
     $author.append($name, $entries);
@@ -86,13 +92,20 @@ function printGroups(groups) {
     }
     const $group = div('group');
     const $title = div('title');
-    $title.innerHTML = `<span class="unselectable">${i + 1} группа</span>`;
-    $group.append($title);
     const $summary = div('summary');
+    (() => {
+      const $span = span('unselectable');
+      $span.innerText = `${i + 1} группа`; 
+      $title.append($span);
+      $group.append($title);
+    })();
     $summary.innerHTML =
-      `<span class="unselectable"><span class="entries-count">${group.length}</span> работ от <span class="authors-count">${authors.length}</span> авторов (объём: <span class="entries-size">${entries_size}</span>)<br>` +
-      `Голосуют от группы: <span class="voters-count">${voters.length}</span>&nbsp;&nbsp;` +
-      `<button onclick="prompt('Нажмите Ctrl+C, чтобы копировать список.', '${voters.map(str => addSlashes(str)).join(', ')}');">показать</button></span>`
+      `<span class="unselectable"><span class="entries-count"></span> работ от <span class="authors-count"></span> авторов (объём: <span class="entries-size"></span>)<br>` +
+      `Голосуют от группы: <span class="voters-count"></span>`;
+    $summary.querySelector('.entries-count').innerText = group.length;
+    $summary.querySelector('.authors-count').innerText = authors.length;
+    $summary.querySelector('.voters-count').innerText = voters.length;
+    $summary.querySelector('.entries-size').innerText = entries_size;
     $group.append($summary);
     const dict = {};
     for (const entry of group) {
@@ -102,22 +115,29 @@ function printGroups(groups) {
         dict[entry.author] = 1;
       }
       const $entry = div('entry');
-      $entry.innerHTML =
-        `<span class="entry-size unselectable">${entry.size}</span>` +
-        `<span class="entry-title ${judges.includes(entry.author) ? 'entry-self-rated' : ''}">${entry.title}</span>` +
-        (dict[entry.author] > 1 ? `<span class="entry-same-author unselectable">${dict[entry.author]}</span>` : '') +
-        `<span class="entry-author unselectable ${entry.main ? 'voter' : ''}">${entry.author}</span>`;
+      (() => {
+        const $span1 = span('entry-size', 'unselectable');
+        $span1.innerText = entry.size;
+        const $span2 = span('entry-title', judges.includes(entry.author) ? 'entry-self-rated' : '');
+        $span2.innerText = entry.title;
+        const $span4 = span('entry-author', 'unselectable', entry.main ? 'voter' : '');
+        $span4.innerText = entry.author;
+        $entry.append($span1, $span2);
+        if (dict[entry.author] > 1) {
+          const $span3 = span('entry-same-author', 'unselectable');
+          $span3.innerText = dict[entry.author];
+          $entry.append($span3);
+        }
+        $entry.append($span4);
+      })();
       $group.append($entry);
     }
     if (i < groups.length - 1) {
-      $group.innerHTML += '<br>';
+      const $br = document.createElement('br');
+      $group.append($br);
     }
     $groups.append($group);
   });
-}
-
-function addSlashes(str) {
-  return str.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
 
 function showGrelkaModeHelp() {
