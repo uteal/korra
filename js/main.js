@@ -133,9 +133,8 @@ function makeGroupsAdvanced(groups, entries) {
       if (votesFrom === i) {
         const nextGroup = i < groups.length - 1 ? groups[i + 1] : groups[0];
         v += nextGroup.filter(obj => obj.author === entry.author).length * SELF_VOTING_PENALTY;
-      } else if (votesFrom === i > 0 ? i - 1 : groups.length - 1) {
-        const prevGroup = i > 0 ? groups[i - 1] : groups.at(-1);
-        v += prevGroup.filter(obj => obj.author === entry.author).length * SELF_VOTING_PENALTY;
+      } else if (votesFrom === (i > 0 ? i - 1 : groups.length - 1)) {
+        v += (group.filter(obj => obj.author === entry.author).length + 1) * SELF_VOTING_PENALTY;
       }
       values[i] = v;
     });
