@@ -130,11 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!printedGroups.length) {
       return;
     }
-    const lines = ['Размер\tНазвание\tАвтор\tГолосует'];
+    const lines = ['Автор\tНазвание\tОбъём\tГолосует'];
     for (const group of printedGroups) {
       lines.push('');
-      for (const { size, title, author, main } of group) {
-        lines.push(`${size}\t${title}\t${author}\t${main ? 'Да' : ''}`);
+      for (const { author, title, size, main } of group) {
+        lines.push(`${author}\t${title}\t${size}\t${main ? 'Да' : ''}`);
       }
     }
     excelTextarea.value = lines.join('\n');
