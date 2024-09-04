@@ -92,7 +92,7 @@ function printGroups(groups) {
     $summary.innerHTML =
       `<span class="unselectable"><span class="entries-count">${group.length}</span> работ от <span class="authors-count">${authors.length}</span> авторов (объём: <span class="entries-size">${entries_size}</span>)<br>` +
       `Голосуют от группы: <span class="voters-count">${voters.length}</span>&nbsp;&nbsp;` +
-      `<button onclick="prompt('Нажмите Ctrl+C, чтобы копировать список.', '${voters.join(', ')}');">показать</button></span>`
+      `<button onclick="prompt('Нажмите Ctrl+C, чтобы копировать список.', '${voters.map(str => addSlashes(str)).join(', ')}');">показать</button></span>`
     $group.append($summary);
     const dict = {};
     for (const entry of group) {
@@ -114,6 +114,10 @@ function printGroups(groups) {
     }
     $groups.append($group);
   });
+}
+
+function addSlashes(str) {
+  return str.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
 
 function showGrelkaModeHelp() {
