@@ -120,16 +120,6 @@ function makeGroupsAdvanced(groups, entries) {
   const SAME_AUTHOR_PENALTY = 1;
   const SELF_VOTING_PENALTY = grelkaMode ? 0 : 5;
   let totalValue = 0;
-  const list1 = [];
-  const list2 = [];
-  groups.forEach((group, i) => {
-    list1[i] = {};
-    list2[i] = {};
-    group.forEach((entry) => {
-      list1[i][entry.author] = true;
-      list2[i][entry.author] = 1;
-    });
-  });
 
   while (entries.length) {
     const entry = entries.shift();
