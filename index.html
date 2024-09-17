@@ -1,102 +1,73 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>Конкурсный распределитель</title>
-        <script src="./js/main.js"></script>
-        <script src="./js/utils.js"></script>
-        <script src="./js/sample_data.js"></script>
-        <script src="./js/events.js"></script>
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-        <div class="container">
-            <div class="first-column">
-                <div class="hint align-center">Добавьте участников, следуя формату</div>
-                <div class="info-panel">
-                    Имя автора<br>
-                    Название произведения<br>
-                    Объём произведения (знаки, килобайты и т.д.)
-                </div>
-                <textarea autocomplete="off" placeholder="А.С. Пушкин&#10;Евгений Онегин&#10;175000&#10;&#10;А.С. Пушкин&#10;Капитанская дочка&#10;230132&#10;&#10;Антон Чехов&#10;Хамелеон&#10;5838&#10;&#10;/**&#10;&#10;На роль разделителя также подходит табуляция.&#10;Это позволяет вставить данные из таблицы Excel.&#10;Порядок столбцов: Автор, Название, Объём.&#10;&#10;*/"></textarea>
-            </div>
-            <div class="second-column">
-                <div class="hint align-center">Добавленные участники</div>
-                <div class="info-panel">
-                    <div class="total-authors">Участников: <span>0</span></div>
-                    <div class="total-entries">Произведений: <span>0</span></div>
-                    <div class="total-size">Общий объём: <span>0</span></div>
-                </div>
-                <div class="authors"></div>
-            </div>
-            <div class="third-column">
-                <div class="hint align-center">Настройки распределения</div>
-                <div class="info-panel">
-                    Авторы первой группы оценивают вторую группу, авторы второй — третью и т.д. Последняя группа оценивает первую.
-                </div>
-                <div class="settings">
-                    <div>
-                        <div class="unselectable" style="padding-bottom: 8px;">
-                            <label><input type="radio" name="grouping-type" checked autocomplete="off" onchange="setGroupingType(0)" /> <b>По числу работ в группе</b></label>
-                            <div class="by-works-per-group" style="padding: 4px 16px;">
-                                <label><input type="radio" name="group-size" checked autocomplete="off" onchange="setGroupingParameter(8)" /> ~ 8 </label><br>
-                                <label><input type="radio" name="group-size" autocomplete="off" onchange="setGroupingParameter(10)" /> ~ 10 </label><br>
-                                <label><input type="radio" name="group-size" autocomplete="off" onchange="setGroupingParameter(15)" /> ~ 15 </label><br>
-                                <div>
-                                    <label><input type="radio" name="group-size" autocomplete="off" onchange="setGroupingParameter()" /> Своё значение:</label>
-                                    <input class="group-size-input numeric-input" autocomplete="off" maxlength="2" min="3" max="99" value="20" />
-                                    <button class="button-sub">−</button>
-                                    <button class="button-add">+</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="unselectable">
-                            <label><input type="radio" name="grouping-type" autocomplete="off" onchange="setGroupingType(1)" /> <b>По количеству групп</b></label>
-                            <div class="by-number-of-groups" style="padding: 4px 16px;">
-                                <label><input type="radio" name="groups-count" autocomplete="off" checked onchange="setGroupingParameter(2)" /> 2 </label><br>
-                                <label><input type="radio" name="groups-count" autocomplete="off" onchange="setGroupingParameter(3)" /> 3 </label><br>
-                                <label><input type="radio" name="groups-count" autocomplete="off" onchange="setGroupingParameter(4)" /> 4 </label><br>
-                                <div>
-                                    <label><input type="radio" name="groups-count" autocomplete="off" onchange="setGroupingParameter()" /> Своё значение:</label>
-                                    <input class="groups-count-input numeric-input" autocomplete="off" maxlength="2" min="2" max="99" value="5" />
-                                    <button class="button-sub">−</button>
-                                    <button class="button-add">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="main-button btn-recalculate unselectable"><b>Распределить заново</b></button>
-                    <div class="info-panel unselectable">
-                        <b>Дополнительные возможности</b><br>
-                        <button class="btn-check-unique">Проверить уникальность названий</button>
-                        <button class="btn-show-stats">Расширенная статистика</button>
-                        <button class="btn-copy-for-excel">Результат для вставки в Excel</button>
-                    </div>
-                    <div class="info-panel">
-                        <b>В случае нескольких работ от автора</b><br><br>
-                        1. Автор голосует из группы со своей самой объёмной работой. При равных объёмах — с последней добавленной.<br><br>
-                        2. Программа стремится распределить работы автора по разным группам. Вторая и последующие работы автора в группе
-                        помечаются номером. Например: <span class="entry-same-author">2</span><br><br>
-                        3. Программа стремится не допустить оценки автором собственных работ. Произведение в группе,
-                        подсудной своему автору, <span class="entry-self-rated">выделяется так</span>.
-                    </div>
-                    <div class="info-panel unselectable">
-                        <b>Эксперименты и тестирование</b><br>
-                        <label><input type="checkbox" autocomplete="off" onchange="setGrelkaMode(this.checked)" />Режим "грелки"</label><span class="text-button" onclick="showGrelkaModeHelp()">(что это?)</span><br>
-                        <button class="btn-set-dummy-data">Вставить отладочные данные</button>
-                    </div>
-                </div>
-            </div>
-            <div class="fourth-column">
-                <div class="groups"></div>
-            </div>
-            <div class="excel-screen display-none">
-                <div class="excel-inner">
-                    Нажмите Ctrl+C, чтобы копировать данные. Щёлкните мимо этого окна, чтобы оно исчезло.
-                    <textarea class="excel-textarea"></textarea>
-                </div>
-            </div>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>The Glyphs</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="./lib/nwrap.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div id="container">
+      
+      <div id="game">
+
+        <div id="road" class="screen hidden">
+          <div
+            id="to_tavern" class="clickable"
+            x="890" y="410" d="100"
+          ></div>
         </div>
-    </body>
+        
+        <div id="tavern" class="screen hidden"></div>
+
+        <div id="square" class="screen hidden">
+          <div
+            id="to_fountain" class="clickable"
+            x="425" y="545" d="100"
+          ></div>
+          <div
+            id="to_beacon" class="clickable"
+            x="500" y="340" d="100"
+          ></div>
+          <div
+            id="to_chasm" class="clickable"
+            x="1120" y="600" d="100"
+          ></div>
+        </div>
+        
+        <div id="fountain" class="screen hidden">
+          <div
+            id="coins" class="clickable"
+            x="540" y="410" d="100"
+          ></div>
+        </div>
+        
+        <div id="beacon" class="screen hidden">
+          <div
+            id="lighthouse" class="clickable"
+            x="550" y="150" d="100"
+          ></div>
+          <div
+            id="star" class="clickable"
+            x="1010" y="90" d="100"
+          ></div>
+        </div>
+
+        <div id="chasm" class="screen hidden">
+          <div
+            id="tree_on_the_edge" class="clickable"
+            x="500" y="170" d="100"
+          ></div>
+        </div>
+
+        <div id="portal" class="screen hidden"></div>
+
+        <div id="active_portal" class="screen hidden"></div>
+
+      </div>
+      
+    </div>
+    <script src="./init.js" type="module"></script>
+  </body>
 </html>
