@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.numeric-input').forEach(el => el.addEventListener('input', () => {
     const val = parseInt(el.value);
+    el.parentElement.querySelector('input[type="radio"]').checked = 'checked';
     if (val !== +el.value || val < parseInt(el.getAttribute('min')) || val > parseInt(el.getAttribute('max'))) {
       el.classList.add('error');
     } else {
